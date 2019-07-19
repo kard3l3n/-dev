@@ -1,0 +1,31 @@
+import pandas
+
+from locust import HttpLocust, TaskSet, task
+
+class n11(TaskSet):
+
+    
+
+    @task
+
+    def keyword(self):
+
+        keyword = list(pandas.read_csv('n11.csv').Keyword.values)
+
+        for i in keyword:
+
+            self.client.get('/arama?q='+str(i))
+
+
+
+class WebsiteUser(HttpLocust):
+    
+    host="https://www.n11.com/"
+
+    task_set = n11
+
+    min_wait = 5000
+
+    max_wait = 8000
+
+    
